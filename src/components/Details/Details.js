@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router";
+import { browserHistory, Link } from "react-router";
 
 import "./Details.css"
 
@@ -9,10 +9,16 @@ import { addToCart } from "../../ducks/product";
 export function Details( { addToCart, product } ) {
 	const {
 		  description
+		, id
 		, logo
 		, name
 		, price
 	} = product;
+
+	function addToCartAndRedirect() {
+		addToCart( id );
+		browserHistory.push( "/shop" );
+	}
 
 	return (
 		<div className="details">
@@ -26,7 +32,7 @@ export function Details( { addToCart, product } ) {
 			<p className="details__description">{ description }</p>
 			<button
 				className="details__buy"
-				onClick={ () => addToCart( product.id ) }
+				onClick={ addToCartAndRedirect }
 			>
 				Buy now for ${ price }!
 			</button>
